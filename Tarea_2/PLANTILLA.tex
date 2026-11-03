@@ -1,0 +1,371 @@
+% =====================================================================
+%  Tarea 2 - Elementos de Reconocimiento Visual (FCEN, UBA)
+%  Plantilla de informe: completen todo lo que aparece en GRIS (\completar{...})
+%  y reemplacen las figuras de ejemplo por las suyas (carpeta figuras/).
+% =====================================================================
+
+\documentclass[11pt,a4paper]{article}
+ 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla,es-noshorthands]{babel}
+\usepackage{lmodern}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=violeta, urlcolor=violeta}
+
+% ----------------------------- Estilo ---------------------------------
+\definecolor{naranja}{HTML}{E8871E}
+\definecolor{violeta}{HTML}{5B3A8E}
+\definecolor{gris}{HTML}{8A8A8A}
+ 
+% Texto a completar
+% Cuando terminen, pueden dejarlo asi o cambiar la definicion por \newcommand{\completar}[1]{#1}
+\newcommand{\completar}[1]{\textcolor{gris}{\textit{[#1]}}}
+
+%Figura: si el archivo no existe todavia, dibuja un recuadro con el nombre
+\newcommand{\figura}[3][0.85\linewidth]{%
+  \IfFileExists{#2}{\includegraphics[width=#1]{#2}}{%
+    \fbox{\parbox[c][4.2cm][c]{\dimexpr#1-2\fboxsep-2\fboxrule\relax}{\centering\textcolor{gris}{\small Falta la figura: \texttt{\detokenize{#2}}\\#3}}}}}
+ 
+\newtcolorbox{hipotesis}[1][]{colback=naranja!8, colframe=naranja, title=Hipótesis, fonttitle=\bfseries, #1}
+\newtcolorbox{respuesta}[1]{colback=violeta!4, colframe=violeta!70, title={#1}, fonttitle=\bfseries}
+ 
+\lstset{basicstyle=\ttfamily\small, backgroundcolor=\color{gray!8}, frame=single, rulecolor=\color{gray!40},
+        breaklines=true, columns=fullflexible, keepspaces=true, showstringspaces=false}
+ 
+\setlist{itemsep=2pt}
+
+
+
+
+
+
+% =====================================================================
+\begin{document}
+ 
+\begin{titlepage}
+  \centering
+  \vspace*{2cm}
+  {\Large Elementos de Reconocimiento Visual\par}
+  \vspace{2.2cm}
+  \vspace{0.4cm}
+  {\LARGE Clasificación de imágenes con features y un MLP\par}
+  \vspace{0.4cm}
+  \vspace{2cm}
+  {\large\textbf{Grupo: NOMBRE DEL GRUPO} \par}
+  \vspace{0.4cm}
+  {\large\textbf{Integrantes: NOMBRES Y LU}\par}
+  \vspace{0.2cm}
+  {\integrantes\par}
+  \vspace{0.6cm}
+  {\large\textbf{Dataset elegido: DATASET} \dataset\par}
+  \vfill
+
+\end{titlepage}
+ 
+\tableofcontents
+\newpage
+
+% =====================================================================
+\section{El problema y el dataset}
+ 
+\completar{En pocas líneas: qué hay que clasificar, de dónde salen las imágenes, cuántas clases hay y por qué el problema es interesante o difícil}
+ 
+
+ 
+% =====================================================================
+\section{Análisis exploratorio (EDA)}
+ 
+\subsection{Inspección visual (A OJO)}
+ 
+\begin{figure}[H]
+  \centering
+  \figura{figuras/ejemplos_por_clase.png}{Unas imágenes de cada clase}
+  \caption{Ejemplos de cada clase. \completar{Qué se ve a simple vista: qué distingue a cada clase y qué clases se parecen.}}
+  \label{fig:ejemplos}
+\end{figure}
+ 
+\completar{Qué les llamó la atención mirando las imágenes. Estas observaciones son las sospechas que después miden.}
+ 
+\subsection{Análisis cuantitativo de color y textura con alguna fmailia y su propia feature extraida}
+ 
+\completar{Al menos dos análisis. Para cada uno: qué sospecha querían comprobar, qué número calcularon por imagen (la función) y qué mostró al comparar por clase.}
+ 
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{0.48\linewidth}
+    \centering
+    \figura[\linewidth]{figuras/eda_analisis_1.png}{Análisis 1 (por ejemplo, boxplot por clase)}
+    \caption{\completar{Análisis 1}}
+  \end{subfigure}\hfill
+  \begin{subfigure}{0.48\linewidth}
+    \centering
+    \figura[\linewidth]{figuras/eda_analisis_2.png}{Análisis 2}
+    \caption{\completar{Análisis 2}}
+  \end{subfigure}
+  \caption{\completar{Qué medidas separan las clases y cuáles se pisan.}}
+  \label{fig:eda}
+\end{figure}
+ 
+\subsection{Pruebas rápidas con modelos simples}
+ 
+\completar{Antes de fijar la hipótesis, probaron las medidas del EDA con un modelo simple (por ejemplo un perceptrón). Cuenten qué probaron. 
+o sea tiren una MLP simple, un clasificador etc... SOLO con esa feature o esa combinación de features}
+ 
+\begin{table}[H]
+  \centering
+  \label{tab:pruebas_eda}
+  \begin{tabularx}{\linewidth}{lcX}
+    \toprule
+    Medida(s) & Exactitud en validación & Qué nos dijo \\
+    \midrule
+    \completar{medida 1} & & \\
+    \completar{medida 2} & & \\
+    \completar{medida 1 + medida 2} & & \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Exactitud en validación de un modelo simple con cada medida del EDA.}
+\end{table}
+ 
+\subsection{Hipótesis}
+ 
+\begin{hipotesis}
+  \completar{Escriban la hipótesis de forma concreta y comprobable. Por ejemplo: ``El color alcanza para separar X e Y, pero para distinguir Z de W hace falta la textura a escala chica (LBP de radio 1), porque\ldots''. Incluyan qué clases esperan que se confundan y por qué.}
+\end{hipotesis}
+
+\begin{hipotesis}
+  \completar{Escriban la hipótesis de forma concreta y comprobable. Por ejemplo: ``El color alcanza para separar X e Y, pero para distinguir Z de W hace falta la textura a escala chica (LBP de radio 1), porque\ldots''. Incluyan qué clases esperan que se confundan y por qué.}
+\end{hipotesis}
+ 
+% =====================================================================
+\section{Features}
+ 
+\subsection{Descriptores elegidos}
+ 
+\begin{table}[H]
+  \centering
+  \label{tab:features}
+  \begin{tabularx}{\linewidth}{lcX}
+    \toprule
+    Familia & Dimensión & Qué mide y por qué la eligieron (con qué observación del EDA se justifica) \\
+    \midrule
+    Color & \completar{n} & \completar{espacio de color, bins, estadísticas\ldots} \\
+    LBP & \completar{n} & \completar{radio(s), cantidad de vecinos, método\ldots} \\
+    Propia & \completar{n} & \completar{si corresponde} \\
+    \midrule
+    \textbf{Total} & \completar{n} & \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Descriptores que forman el vector de cada imagen.}
+\end{table}
+ 
+\subsection{Feature propia}
+ 
+\completar{Si el EDA mostró algo que el color y el LBP no miden: qué mide su feature (Fourier, densidad de bordes, Hough, manchas\ldots), cómo se calcula y cuánto cambia el modelo con y sin ella. Si no hicieron feature propia, expliquen por qué no hizo falta.}
+ 
+ 
+\subsection{Comparación de configuraciones}
+ 
+\begin{table}[H]
+  \centering
+  \label{tab:configuraciones}
+  \begin{tabular}{lcc}
+    \toprule
+    Configuración & Cantidad de features & Mejor exactitud en validación \\
+    \midrule
+    Solo color & & \\
+    Solo LBP & & \\
+    Color + LBP & & \\
+    \completar{Color + LBP + propia} & & \\
+    \bottomrule
+  \end{tabular}
+  \caption{Mismo MLP (misma arquitectura y semilla) entrenado con cada configuración de features.}
+\end{table}
+ 
+\completar{Qué familia aportó más y si coincide con lo que esperaban del EDA. ¿Qué configuración eligieron?}
+ 
+% =====================================================================
+\section{Estandarización}
+ 
+Cada feature se estandariza con la media y el desvío del conjunto de \textbf{entrenamiento}:
+\[
+  x' = \frac{x - \mu_{\text{ent}}}{\sigma_{\text{ent}}}
+\]
+y esos mismos $\mu_{\text{ent}}$ y $\sigma_{\text{ent}}$ se usan para validación y prueba.
+ 
+\completar{Por qué es necesario en su caso: ¿qué rango de valores tenían sus features antes de estandarizar? (por ejemplo, un histograma entre 0 y 1 junto a una medida que vale cientos). ¿Por qué no se usan la media y el desvío de todo el dataset?}
+ 
+% =====================================================================
+\section{El MLP}
+ 
+\subsection{Arquitectura y entrenamiento}
+ 
+\completar{Describan la clase \texttt{MLP}}
+ 
+\begin{table}[H]
+  \centering
+  \label{tab:hiperparametros}
+  \begin{tabular}{ll}
+    \toprule
+    Hiperparámetro & Valor \\
+    \midrule
+    Pérdida & \texttt{CrossEntropyLoss} \\
+    Optimizador & \completar{Adam} \\
+    Tasa de aprendizaje & \completar{$10^{-3}$} \\
+    \texttt{weight\_decay} (L2) & \completar{$10^{-4}$} \\
+    Tamaño de lote & \completar{32} \\
+    Épocas & \completar{100} \\
+    Criterio para quedarse con un modelo & Mejor época en validación \\
+    \bottomrule
+  \end{tabular}
+\caption{Hiperparámetros de entrenamiento.}
+\end{table}
+ 
+\subsection{Comparación de arquitecturas}
+ 
+\begin{table}[H]
+  \centering
+  \label{tab:arquitecturas}
+  \begin{tabular}{lcrccc}
+    \toprule
+    \texttt{capas\_ocultas} & Profundidad & Parámetros & Validación & Entrenamiento & Ent. $-$ Val. \\
+    \midrule
+    \completar{(64,)} & 1 & & & & \\
+    \completar{(128, 64)} & 2 & & & & \\
+    \completar{(256, 128, 64)} & 3 & & & & \\
+    \completar{(32, 32, 32, 32)} & 4 & & & & \\
+    \bottomrule
+  \end{tabular}
+  \caption{Arquitecturas probadas con la configuración de features elegida. Entrenamiento se mide en la misma época que la mejor validación.}
+\end{table}
+ 
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{0.58\linewidth}
+    \centering
+    \figura[\linewidth]{figuras/curvas_elegida.png}{Curvas de pérdida y exactitud}
+    \caption{Curvas de la arquitectura elegida.}
+  \end{subfigure}\hfill
+  \begin{subfigure}{0.4\linewidth}
+    \centering
+    \figura[\linewidth]{figuras/mas_grande_es_mejor.png}{Validación vs. parámetros}
+    \caption{¿Más grande es mejor?}
+  \end{subfigure}
+  \caption{\completar{Qué muestran las curvas: ¿hay sobreajuste? ¿desde qué época?}}
+  \label{fig:curvas}
+\end{figure}
+ 
+\completar{Qué arquitectura eligieron y por qué. Si dos quedaron casi empatadas, ¿con cuál se quedaron y por qué?}
+ 
+% =====================================================================
+\section{Resultados en prueba}
+ 
+\begin{table}[H]
+  \centering
+  \label{tab:prueba}
+  \begin{tabular}{lc}
+    \toprule
+    & Exactitud \\
+    \midrule
+    Azar ($1 / \text{cantidad de clases}$) & \\
+    Validación (modelo elegido) & \\
+    \textbf{Prueba} & \\
+    \bottomrule
+  \end{tabular}
+    \caption{Resultado final (el conjunto de prueba se usa una sola vez, con todas las decisiones ya tomadas).}
+\end{table}
+ 
+\begin{figure}[H]
+  \centering
+  \figura[0.65\linewidth]{figuras/matriz_confusion.png}{Matriz de confusión en prueba}
+  \caption{Matriz de confusión en prueba. \completar{Qué pares de clases se confunden más.}}
+  \label{fig:confusion}
+\end{figure}
+ 
+\subsection{Análisis de errores}
+ 
+\begin{figure}[H]
+  \centering
+  \figura{figuras/errores.png}{Al menos 4 imágenes mal clasificadas}
+  \caption{Imágenes de prueba mal clasificadas, con la clase real y la predicha.}
+  \label{fig:errores}
+\end{figure}
+ 
+\begin{table}[H]
+  \centering
+  \label{tab:errores}
+  \begin{tabularx}{\linewidth}{cllcX}
+    \toprule
+    \# & Real & Predicha & Confianza & Por qué creemos que se equivocó \\
+    \midrule
+    1 & & & & \\
+    2 & & & & \\
+    3 & & & & \\
+    4 & & & & \\
+    \bottomrule
+  \end{tabularx}
+    \caption{Análisis de al menos 4 errores.}
+\end{table}
+ 
+% =====================================================================
+\section{Conclusiones}
+ 
+Respondan cada pregunta con los números de las tablas y figuras de arriba (citen la tabla o figura correspondiente).
+ 
+\begin{respuesta}{1. La hipótesis}
+  \textit{¿Se cumplió la hipótesis del EDA? ¿Las clases que esperaban que se confundieran son las que más se confunden en la matriz de confusión? Si no se cumplió, ¿qué se les escapó en el EDA?}\par\medskip
+  \completar{Respuesta}
+\end{respuesta}
+ 
+\begin{respuesta}{2. Las features}
+  \textit{¿Qué familia aportó más en su dataset? Mirando cómo son las imágenes, ¿por qué creen que pasa? ¿Alguna familia empeoró el modelo al sumarla?}\par\medskip
+  \completar{Respuesta}
+\end{respuesta}
+ 
+\begin{respuesta}{3. La feature propia}
+  \textit{¿Cuánto cambió la validación con y sin ella? ¿Mide algo que el color y el LBP no capturaban, o repite información que ya estaba?}\par\medskip
+  \completar{Respuesta}
+\end{respuesta}
+ 
+\begin{respuesta}{4. La estandarización}
+  \textit{¿Qué pasa si entrenan el mismo MLP sin estandarizar? Cuenten qué exactitud obtuvieron y cómo se vieron las curvas, y expliquen por qué pasa.}\par\medskip
+  \completar{Respuesta}
+\end{respuesta}
+ 
+\begin{respuesta}{5. La profundidad}
+  \textit{¿Les sirvió una red más profunda o más ancha? Si no, ¿por qué? Piensen en cuántas imágenes de entrenamiento tienen, cuántos parámetros tiene cada red y qué tan ``fácil'' queda el problema después de las features.}\par\medskip
+  \completar{Respuesta}
+\end{respuesta}
+ 
+\begin{respuesta}{6. Los errores}
+  \textit{¿Qué tienen en común los errores que analizaron? ¿Qué cambiarían (datos, features o modelo) para corregirlos?}\par\medskip
+  \completar{Respuesta}
+\end{respuesta}
+ 
+\begin{respuesta}{7. Las preguntas de la guía de su dataset}
+  \textit{Copien las dos preguntas de la guía de su dataset y respóndanlas con el EDA y los resultados.}\par\medskip
+  \textbf{Pregunta 1:} \completar{copiar la pregunta}\par
+  \completar{Respuesta}\par\medskip
+  \textbf{Pregunta 2:} \completar{copiar la pregunta}\par
+  \completar{Respuesta}
+\end{respuesta}
+ 
+\begin{respuesta}{Extra (opcional): una foto propia}
+  \textit{Si probaron el modelo con una foto sacada por ustedes: ¿la clasificó bien? Si no, ¿qué tiene de distinto respecto de las imágenes del dataset (luz, escala, fondo, cámara)?}\par\medskip
+  \completar{Respuesta}
+\end{respuesta}
+ 
+ 
+\end{document}
